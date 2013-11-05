@@ -1,6 +1,5 @@
 /**
  * Copyright (c) 2011-2013, Lukas Eder, lukas.eder@gmail.com
- * Copyright (c) 2013, Huang Tao, htbest2000@gmail.com
  * All rights reserved.
  *
  * This software is licensed to you under the Apache License, Version 2.0
@@ -345,6 +344,19 @@ public class Reflect {
         return call(name, null, args);
     }
 
+    /**
+     * Call a method by its name.
+     * <p>
+     * See {@link #call(String, Object...)}.
+     *
+     * @param name The method name
+     * @param args The method arguments
+     * @param argTypes The method argument types
+     * @return The wrapped method result or the same wrapped object if the
+     *         method returns <code>void</code>, to be used for further
+     *         reflection.
+     * @throws ReflectException If any reflection exception occurred.
+     */
     public Reflect call(String name, Class<?>[] argTypes, Object... args) throws ReflectException {
         Class<?>[] types = (argTypes == null) ? types(args) : argTypes;
 
