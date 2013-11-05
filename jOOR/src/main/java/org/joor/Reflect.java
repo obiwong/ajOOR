@@ -1,5 +1,6 @@
 /**
  * Copyright (c) 2011-2013, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2013, Huang Tao, htbest2000@gmail.com
  * All rights reserved.
  *
  * This software is licensed to you under the Apache License, Version 2.0
@@ -341,7 +342,15 @@ public class Reflect {
      * @throws ReflectException If any reflection exception occurred.
      */
     public Reflect call(String name, Object... args) throws ReflectException {
-        Class<?>[] types = types(args);
+        return call(name, null, args);
+    }
+
+    public Reflect call(String name, Class<?>[] argTypes, Object... args) throws ReflectException {
+        Class<?>[] types = (argTypes == null) ? types(args) : argTypes;
+
+        if (types.length != args.length) {
+            throw new ReflectException();
+        }
 
         // Try invoking the "canonical" method, i.e. the one with exact
         // matching argument types
