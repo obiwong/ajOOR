@@ -85,21 +85,6 @@ public class Reflect {
     }
 
     /**
-     * Wrap a class name.
-     * <p>
-     * This is the same as calling <code>on(classLoader.loadClass(name))</code>
-     *
-     * @param loader class loader
-     * @param name A fully qualified class name
-     * @return A wrapped class object, to be used for further reflection.
-     * @throws ReflectException If any reflection exception occurred.
-     * @see #on(Class)
-     */
-    public static Reflect on(ClassLoader loader, String name) throws ReflectException {
-        return on(forName(loader, name));
-    }
-
-    /**
      * Wrap a class.
      * <p>
      * Use this when you want to access static fields and methods on a
@@ -688,23 +673,6 @@ public class Reflect {
     private static Class<?> forName(String name) throws ReflectException {
         try {
             return Class.forName(name);
-        }
-        catch (Exception e) {
-            throw new ReflectException(e);
-        }
-    }
-
-    /**
-     * Load a class
-     *
-     * @param loader class loader
-     * @param name class name
-     *
-     * @see ClassLoader#loadClass(String)
-     */
-    private static Class<?> forName(ClassLoader loader, String name) throws ReflectException {
-        try {
-            return loader.loadClass(name);
         }
         catch (Exception e) {
             throw new ReflectException(e);
