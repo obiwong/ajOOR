@@ -1,6 +1,5 @@
 /**
- * Copyright (c) 2011-2013, Lukas Eder, lukas.eder@gmail.com
- * Copyright (c) 2013, Huang Tao, htbest2000@gmail.com
+ * Copyright (c) 2013, HuangTao, htbest2000@gmail.com
  * All rights reserved.
  *
  * This software is licensed to you under the Apache License, Version 2.0
@@ -34,6 +33,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+
 package org.ajoor;
 
 import org.joor.Reflect;
@@ -45,14 +45,19 @@ import android.content.pm.PackageManager.NameNotFoundException;
 public class Builder {
 
     public static Reflect build(Context ctx, String apkName, String name) throws ReflectException {
-        return Reflect.on(getApkContext(ctx, apkName).getClassLoader(), name);
+        try {
+            return Reflect.on(getApkContext(ctx, apkName).getClassLoader().loadClass(name));
+        } catch (ClassNotFoundException e) {
+            throw new ReflectException(e);
+        }
     }
 
-    private static Context getApkContext(Context ctx, String apkName) {
+    public static Context getApkContext(Context ctx, String apkName) {
         try {
             return ctx.createPackageContext(apkName, Context.CONTEXT_INCLUDE_CODE | Context.CONTEXT_IGNORE_SECURITY);
         } catch (NameNotFoundException e) {
             throw new ReflectException(e);
         }
     }
+
 }
